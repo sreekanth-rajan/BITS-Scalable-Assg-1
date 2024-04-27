@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sales-order-service-deployment
+spec:
+  replicas: 1  # Number of replicas (pods) to run
+  selector:
+    matchLabels:
+      app: sales-order-service
+  template:
+    metadata:
+      labels:
+        app: sales-order-service
+    spec:
+      containers:
+        - name: sales-order-service
+          image: swastikkela/sales-order-service-image:latest  # Image path for your sales-order-service
+          ports:
+            - containerPort: 5053  # Port your sales-order-service listens on
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5053
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sales-order-service-service
+spec:
+  selector:
+    app: sales-order-service
+  ports:
+    - protocol: TCP
+      port: 5053
+      name: http
+  type: NodePort  # Expose service externally using NodePort

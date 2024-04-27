@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: item-service-deployment
+spec:
+  replicas: 1  # Number of replicas (pods) to run
+  selector:
+    matchLabels:
+      app: item-service
+  template:
+    metadata:
+      labels:
+        app: item-service
+    spec:
+      containers:
+        - name: item-service
+          image: swastikkela/item-service-image:latest  # Image path for your item-service
+          ports:
+            - containerPort: 5052  # Port your item-service listens on
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5052
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: item-service-service
+spec:
+  selector:
+    app: item-service
+  ports:
+    - protocol: TCP
+      port: 5052
+      name: http
+  type: NodePort  # Expose service externally using NodePort

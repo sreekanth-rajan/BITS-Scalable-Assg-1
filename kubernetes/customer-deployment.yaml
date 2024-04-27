@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-service-deployment
+spec:
+  replicas: 1  # Number of replicas (pods) to run
+  selector:
+    matchLabels:
+      app: customer-service
+  template:
+    metadata:
+      labels:
+        app: customer-service
+    spec:
+      containers:
+        - name: customer-service
+          image: swastikkela/customer-service-image:latest  # Image path for your customer-service
+          ports:
+            - containerPort: 5051  # Port your customer-service listens on
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5051
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service-service
+spec:
+  selector:
+    app: customer-service
+  ports:
+    - protocol: TCP
+      port: 5051
+      name: http
+  type: NodePort  # Expose service externally using NodePort
