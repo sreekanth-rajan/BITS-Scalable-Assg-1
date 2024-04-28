@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: sales-order-service
-          image: swastikkela/sales-order-service-image:latest  # Image path for your sales-order-service
+          image: sreekanth007/salesorderservice:latest  # Image path for your sales-order-service
           ports:
             - containerPort: 5053  # Port your sales-order-service listens on
           livenessProbe:

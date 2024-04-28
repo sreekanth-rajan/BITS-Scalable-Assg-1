@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: angular-app
-          image: swastikkela/angular-app-image:latest  # Image path for your Angular application
+          image: sreekanth007/shoppingui:latest  # Image path for your Angular application
           ports:
             - containerPort: 8080  # Port your Angular application listens on
           livenessProbe:

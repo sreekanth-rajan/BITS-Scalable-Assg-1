@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: customer-service
-          image: swastikkela/customer-service-image:latest  # Image path for your customer-service
+          image: sreekanth007/customerservice:latest  # Image path for your customer-service
           ports:
             - containerPort: 5051  # Port your customer-service listens on
           livenessProbe:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: item-service
-          image: swastikkela/item-service-image:latest  # Image path for your item-service
+          image: sreekanth007/itemservice:latest  # Image path for your item-service
           ports:
             - containerPort: 5052  # Port your item-service listens on
           livenessProbe:
